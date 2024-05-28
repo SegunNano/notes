@@ -1,0 +1,12 @@
+.Tags>button {
+    margin-left: 50px !important;
+}
+
+.Tags>button:hover {
+    background-color: #1976d2b7;
+}
+
+.Tags {
+    display: flex;
+    align-items: center;
+}

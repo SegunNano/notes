@@ -1,0 +1,26 @@
+.AddEditNotes {
+    width: 90%;
+    max-width: 800px;
+    background-color: #fffffff1;
+    padding: 50px;
+    border-radius: 10px;
+    max-height: 90vh;
+    overflow: scroll;
+}
+
+
+.MuiModal-root {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.AddEditNotes>* {
+    margin-bottom: 20px !important;
+}
+
+.AddEditNotes>.btn {
+    margin-right: auto;
+    margin-left: 95%;
+}

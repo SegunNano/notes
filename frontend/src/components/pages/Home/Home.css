@@ -1,0 +1,12 @@
+.NoteCardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.NoteCardContainer>div.MuiPaper-root {
+    width: 500px;
+    max-width: none !important;
+    margin: 20px;
+}

@@ -1,0 +1,28 @@
+.NoteCardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 20px;
+}
+
+
+.NoteCardHeader>.MuiButtonBase-root,
+.NoteCardContainer>div>.MuiCardActions-root>button {
+    border-radius: 50% !important;
+    aspect-ratio: 1 !important;
+    padding: 7px;
+}
+
+.NoteCardContainer>div>.MuiCardActions-root>button {
+    margin-right: 3px !important;
+    margin-left: 3px !important;
+}
+
+.NoteCardContainer div.MuiPaper-root:hover {
+    /* box-shadow: 0px 2px 3px #1976d2; */
+    box-shadow: 0 20px 25px -5px #1976d2, 0 8px 10px -6px #1976d2;
+}
+
+.NoteCardContainer span.MuiSpeedDialIcon-root {
+    margin-bottom: 15px;
+}
