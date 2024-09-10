@@ -20,6 +20,7 @@ const register = async (req, res) => {
         generateToken(res, newUser._id);
 
         newUser.password = '';
+        console.log(generateToken(res, newUser._id));
         res.status(201).json(newUser);
     } catch {
         res.status(400);

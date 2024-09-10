@@ -1,6 +1,7 @@
 //packages
 import express from "express";
 import path from "path";
+import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
@@ -17,12 +18,10 @@ connectDB();
 const app = express();
 
 app.use(express.json());
+app.use(cors({ origin: "*" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.get("/", (req, res) => {
-    res.json({ data: 'hello' });
-});
 
 app.use('/api/users', userRoutes);
 app.use('/notes', noteRoutes);

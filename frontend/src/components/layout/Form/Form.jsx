@@ -8,12 +8,10 @@ import { Link } from 'react-router-dom';
 import './Form.css';
 
 
-const Form = ({ page, onChange, value }) => {
+const Form = ({ page, onChange, value, handleSubmit }) => {
     const [visible, setVisible] = useState(false);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-    };
+
 
 
     return (
@@ -29,15 +27,15 @@ const Form = ({ page, onChange, value }) => {
                         <TextField label='Password' size="small" variant="filled" required type={visible ? 'text' : 'password'} value={value[1]} onChange={onChange[1]} InputProps={visible ? {
                             endAdornment: (
                                 <InputAdornment position="end" >
-                                    <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2 }} >
-                                        <VisibilityOffIcon onClick={() => { setVisible(!visible); }} />
+                                    <IconButton onClick={() => { setVisible(!visible); }} size="large" edge="start" aria-label="menu" sx={{ mr: 2 }} >
+                                        <VisibilityOffIcon />
                                     </IconButton></InputAdornment>
                             )
                         } : {
                             endAdornment: (
                                 <InputAdornment position="end" >
-                                    <IconButton size="large" edge="start" color="primary" aria-label="menu" sx={{ mr: 2 }} >
-                                        <VisibilityIcon onClick={() => { setVisible(!visible); }} />
+                                    <IconButton onClick={() => { setVisible(!visible); }} size="large" edge="start" color="primary" aria-label="menu" sx={{ mr: 2 }} >
+                                        <VisibilityIcon />
                                     </IconButton></InputAdornment>
                             )
                         }} />
