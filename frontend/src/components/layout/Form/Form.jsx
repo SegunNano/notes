@@ -8,11 +8,8 @@ import { Link } from 'react-router-dom';
 import './Form.css';
 
 
-const Form = ({ page, onChange, value, handleSubmit }) => {
+const Form = ({ onChange, value, handleSubmit }) => {
     const [visible, setVisible] = useState(false);
-
-
-
 
     return (
         <div className="form-container">
@@ -20,9 +17,11 @@ const Form = ({ page, onChange, value, handleSubmit }) => {
                 <CardContent>
                     <form onSubmit={handleSubmit} >
                         <Typography variant="h4">
-                            {page === 'login' ? 'Login' : 'Sign - Up'}
+                            {value.length < 3 ? 'Login' : 'Sign - Up'}
                         </Typography>
-                        {page === 'signup' && <TextField label='Name' type="text" size="small" value={value[2]} onChange={onChange[2]} variant="filled" required />}
+                        {value.length > 2 && (
+                            <TextField label='Name' type="text" size="small" value={value[2]} onChange={onChange[2]} variant="filled" required />
+                        )}
                         <TextField label='Email' type="email" size="small" variant="filled" value={value[0]} onChange={onChange[0]} required />
                         <TextField label='Password' size="small" variant="filled" required type={visible ? 'text' : 'password'} value={value[1]} onChange={onChange[1]} InputProps={visible ? {
                             endAdornment: (
@@ -39,16 +38,20 @@ const Form = ({ page, onChange, value, handleSubmit }) => {
                                     </IconButton></InputAdornment>
                             )
                         }} />
-                        <Button type="submit" variant="contained" size="large">{page === 'login' ? 'Login' : 'Create Account'}</Button>
-                        {page === 'login' ? <Typography>Not registered yet?
-                            <Link to='/signup'>
-                                Create an account
-                            </Link>
-                        </Typography> : <Typography>Already have an account?
-                            <Link to='/login'>
-                                Login
-                            </Link>
-                        </Typography>}
+                        <Button type="submit" variant="contained" size="large">{value.length < 3 ? 'Login' : 'Create Account'}</Button>
+                        {value.length < 3 ? (
+                            <Typography>Not registered yet?
+                                <Link to='/signup'>
+                                    Create an account
+                                </Link>
+                            </Typography>
+                        ) : (
+                            <Typography>Already have an account?
+                                <Link to='/login'>
+                                    Login
+                                </Link>
+                            </Typography>
+                        )}
                     </form>
                 </CardContent>
             </Card>

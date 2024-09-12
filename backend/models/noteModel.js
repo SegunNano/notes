@@ -10,15 +10,17 @@ const noteSchema = mongoose.Schema({
         required: true
     },
     tags: {
-        type: [String],
-        default: []
+        type: [],
+        default: [],
+        required: true
     },
     isPinned: {
         type: Boolean,
         default: false
     },
-    userId: {
-        type: String,
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true
     }
 }, { timestamps: true });

@@ -4,6 +4,7 @@ import generateToken from "../utils/createToken.js";
 import Note from "../models/noteModel.js";
 
 const register = async (req, res) => {
+    console.log("here");
     const { username, email, password } = req.body;
     if (!(username && email && password)) {
         throw new Error('Please Fill All fields.');
@@ -20,7 +21,8 @@ const register = async (req, res) => {
         generateToken(res, newUser._id);
 
         newUser.password = '';
-        console.log(generateToken(res, newUser._id));
+        // console.log(generateToken(res, newUser._id));
+        console.log(newUser);
         res.status(201).json(newUser);
     } catch {
         res.status(400);
@@ -47,14 +49,15 @@ const login = async (req, res) => {
         }
     }
 };
-
-const getAllNames = async (req, res) => {
-    const { _id } = req.user;
-
-    const allNotes = await Note.findOne({ userId: _id }).sort(({ isPinned: -1 }));
+const logout = async (req, res) => {
+    res.cookie('jwt', '', {
+        httpOnly: true,
+        expires: new Date(0)
+    });
+    res.status(200).json({ message: "You're logged out." });
 };
 
 
 
 
-export { register, login };
+export { register, login, logout };

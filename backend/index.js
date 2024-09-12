@@ -24,7 +24,7 @@ app.use(cookieParser());
 
 
 app.use('/api/users', userRoutes);
-app.use('/notes', noteRoutes);
+app.use('/api/notes', noteRoutes);
 
 
 app.listen(port, () => console.log(`Server running on port: ${port} 👍`));

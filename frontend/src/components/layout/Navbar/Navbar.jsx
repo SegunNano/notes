@@ -1,21 +1,24 @@
 
 import { Avatar, TextField, Typography, Toolbar, InputAdornment, Box, AppBar, Button, IconButton } from '@mui/material';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useLogoutMutation } from '../../../redux/api/usersApiSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
+import { logout } from '../../../redux/features/auth/authSlice';
 
 import './Navbar.css';
-import { useState } from 'react';
 
-export default function NavBar({ login, searchValue, cancel, setOnChange }) {
-    const [user, setUser] = useState(true);
-    if (!user) {
-        return <Navigate to='/login' replace={true} />;
-    }
+export default function NavBar({ searchValue, cancel, setOnChange }) {
+    const [logoutApiCall] = useLogoutMutation();
+    const { userInfo } = useSelector(state => state.auth);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     return (
+
         <div className='Navbar'>
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static">
@@ -27,7 +30,7 @@ export default function NavBar({ login, searchValue, cancel, setOnChange }) {
                             Notes
                         </Typography>
 
-                        {login === 'login' && <TextField type='text' size='small' value={searchValue} onChange={setOnChange} variant='outlined' placeholder='Search Notes' InputProps={{
+                        {userInfo && <TextField type='text' size='small' value={searchValue} onChange={setOnChange} variant='outlined' placeholder='Search Notes' InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end" >
                                     {searchValue && <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2 }} >
@@ -38,10 +41,20 @@ export default function NavBar({ login, searchValue, cancel, setOnChange }) {
                             )
                         }} />}
                         <div className='personal-info'>
-                            {login === 'login' && <Avatar>FS</Avatar>}
-                            {login === 'login' && <Button color="inherit" onClick={() => {
-                                setUser(false);
-                            }}  >Logout</Button>}
+                            {userInfo && (
+                                <Avatar>{userInfo.username.substring(0, 2)}</Avatar>
+                            )}
+                            {userInfo && (
+                                <Button color="inherit" onClick={async () => {
+                                    try {
+                                        await logoutApiCall().unwrap();
+                                        dispatch(logout());
+                                        navigate('/login');
+                                    } catch (error) {
+                                        console.error(error);
+                                    }
+                                }}  >Logout</Button>
+                            )}
                         </div>
                     </Toolbar>
                 </AppBar>

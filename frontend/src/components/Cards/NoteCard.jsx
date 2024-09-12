@@ -21,41 +21,44 @@ import './NoteCard.css';
 
 
 
-const NoteCard = ({ data, handleOpenModal }) => {
+const NoteCard = ({ notes, handleDelete, handleOpenModal, handlePin, handleEditModal }) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
     return (
         <>
-            <Card sx={{ maxWidth: 345 }}>
-                <div className='NoteCardHeader'>
-                    <CardHeader
+            {notes.length ? (
+                notes.map((note) =>
+                    <Card key={note._id} sx={{ maxWidth: 345 }}>
+                        <div className='NoteCardHeader'>
+                            <CardHeader title={note.title} subheader={note.createdAt.substring(0, 10)} />
+                            <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2 }} >
+                                {note.isPinned ? <PushPinIcon color='primary' onClick={() => { handlePin(note._id, note.isPinned); }} /> : <PushPinOutlinedIcon onClick={() => { handlePin(note._id, note.isPinned); }} />}
+                            </IconButton>
+                        </div>
 
-                        title={data.title}
-                        subheader={data.date}
-                    />
-                    <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2 }} >
-                        {data.isPinned ? <PushPinIcon color='primary' onClick={() => { setVisible(!visible); }} /> : <PushPinOutlinedIcon onClick={() => { setVisible(!visible); }} />}
-                    </IconButton>
-                </div>
-
-                <CardContent>
-                    <Typography variant="body2" color="text.secondary">{data.content}</Typography>
-                </CardContent>
-                <CardActions>
-                    {data.tags.map((tag, idx) => {
-                        return <Button key={idx} size="small">#{tag}</Button>;
-                    })}
-                </CardActions>
-                <CardActions disableSpacing>
-                    <IconButton aria-label="edit notes">
-                        <EditIcon />
-                    </IconButton>
-                    <IconButton aria-label="delete notes">
-                        <DeleteIcon />
-                    </IconButton>
-                </CardActions>
-            </Card>
+                        <CardContent>
+                            <Typography variant="body2" color="text.secondary">{note.content}</Typography>
+                        </CardContent>
+                        <CardActions>
+                            {note.tags.map((tag) => {
+                                return <Button key={tag.id} size="small">#{tag.text}</Button>;
+                            })}
+                        </CardActions>
+                        <CardActions disableSpacing>
+                            <IconButton aria-label="edit notes">
+                                <EditIcon onClick={() => handleEditModal(note)} />
+                            </IconButton>
+                            <IconButton aria-label="delete notes">
+                                <DeleteIcon onClick={() => handleDelete(note._id)} />
+                            </IconButton>
+                        </CardActions>
+                    </Card>
+                )
+            ) : (
+                <div className="">You dont have any note.</div>
+            )}
             <SpeedDial
                 ariaLabel="SpeedDial controlled open example"
                 sx={{ position: 'absolute', bottom: 16, right: 16 }}
@@ -69,7 +72,7 @@ const NoteCard = ({ data, handleOpenModal }) => {
                     key='hello'
                     icon={<EditNoteIcon />}
                     tooltipTitle='Add New Note'
-                    onClick={handleOpenModal}
+                    onClick={() => handleOpenModal()}
                 />
 
             </SpeedDial>

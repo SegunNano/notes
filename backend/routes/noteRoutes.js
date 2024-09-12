@@ -5,17 +5,11 @@ import { addNotes, updateNote, getAllNotes, deleteNote } from "../controllers/no
 
 
 router.route('/')
-    .get(isLoggedIn, asyncHandler(getAllNotes));
-
-
-router.route('/add')
+    .get(isLoggedIn, asyncHandler(getAllNotes))
     .post(isLoggedIn, asyncHandler(addNotes));
 
-router.route('/edit/:noteId')
-    .put(isLoggedIn, asyncHandler(updateNote));
-
-
-router.route('/delete/:noteId')
+router.route('/:noteId')
+    .put(isLoggedIn, asyncHandler(updateNote))
     .delete(isLoggedIn, asyncHandler(deleteNote));
 
 

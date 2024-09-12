@@ -8,23 +8,12 @@ import IconButton from '@mui/material/IconButton';
 
 import './AddEditNotes.css';
 import { useState } from 'react';
-import { Typography } from '@mui/material';
+// import { Typography } from '@mui/material';
+import { useCreateNoteMutation } from '../../../../redux/api/notesApiSlice';
 
 
+const AddEditNotes = ({ tags, setTags, title, setTitle, content, setContent, handleAdd, handleUpdate, modal, handleCloseModal }) => {
 
-const AddEditNotes = ({ modal, handleCloseModal }) => {
-    const [tags, setTags] = useState([]);
-    const [title, setTitle] = useState('');
-    const [contents, setContents] = useState('');
-
-    const handleAdd = (e) => {
-        // e.preventDefault();
-        console.log([tags, title, contents]);
-        setTags([]);
-        setTitle('');
-        setContents('');
-        handleCloseModal();
-    };
 
     return (
         <Modal open={modal} onClose={handleCloseModal}  >
@@ -39,9 +28,14 @@ const AddEditNotes = ({ modal, handleCloseModal }) => {
                 </Button>
 
                 <TextField value={title} onChange={(e) => { setTitle(e.target.value); }} fullWidth label='TITLE' type="text" placeholder='Example: Go To Gym At 5' required />
-                <TextField value={contents} onChange={(e) => { setContents(e.target.value); }} label='CONTENT' fullWidth multiline minRows={10} type="text" placeholder='Write Your Note Description Here' required />
+                <TextField value={content} onChange={(e) => { setContent(e.target.value); }} label='CONTENT' fullWidth multiline minRows={10} type="text" placeholder='Write Your Note Description Here' required />
                 <Tags tags={tags} setTags={setTags} />
-                <Button type='submit' fullWidth size='large' variant='contained' onClick={handleAdd}>Add</Button>
+
+                {handleUpdate ? (
+                    <Button type='button' fullWidth size='large' variant='contained' onClick={handleUpdate}>Update Note</Button>
+                ) : (
+                    <Button type='button' fullWidth size='large' variant='contained' onClick={handleAdd}>Add</Button>
+                )}
 
             </div >
         </Modal>
