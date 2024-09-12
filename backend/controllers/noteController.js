@@ -59,7 +59,6 @@ const updateNote = async (req, res) => {
 
 
 const getAllNotes = async (req, res) => {
-    // console.log(req.user._id);
     try {
         const allNotes = await Note.find({ user: req.user._id }).sort({ isPinned: -1 });
         res.status(201).json(allNotes);
